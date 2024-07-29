@@ -1,14 +1,85 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model almacen {
+  almacen_id                  Int              @id @default(autoincrement())
+  almacen_nombre              String           @db.VarChar(100)
+  almacen_cantidad            Int
+  almacen_tipo                Int
+  almacen_estado              Int
+  almacen_fecha_de_expiracion DateTime         @db.Date
+  insumos_estado              insumos_estado   @relation(fields: [almacen_estado], references: [insumo_estado_id], onDelete: Cascade, map: "almacen_ibfk_1")
+  donaciones_tipos            donaciones_tipos @relation(fields: [almacen_tipo], references: [tipo_donaciones_id], onDelete: Cascade, map: "almacen_ibfk_2")
+  donaciones                  donaciones[]
+
+  @@index([almacen_cantidad], map: "almacen_cantidad")
+  @@index([almacen_estado], map: "almacen_estado")
+  @@index([almacen_tipo], map: "almacen_tipo")
+}
+
+model donaciones {
+  donaciones_ID                   Int               @id @default(autoincrement())
+  donaciones_tipo_id              Int
+  donaciones_motivo_id            Int
+  donaciones_nombre_receptor      String            @db.Text
+  donaciones_cedula_receptor      Int
+  donaciones_telefono_receptor    String            @db.VarChar(50)
+  donaciones_edad_receptor        Int
+  donaciones_parroquia            String            @db.Text
+  donaciones_diagnostico_receptor String            @db.Text
+  donaciones_almacen_id           Int
+  donaciones_almacen_cantidad     Int
+  donaciones_descripcion          String            @db.Text
+  donaciones_fecha_alta           DateTime          @default(now()) @db.Timestamp(0)
+  almacen                         almacen           @relation(fields: [donaciones_almacen_id], references: [almacen_id], onDelete: Cascade, map: "donaciones_ibfk_1")
+  donaciones_tipos                donaciones_tipos  @relation(fields: [donaciones_tipo_id], references: [tipo_donaciones_id], onDelete: Cascade, map: "donaciones_ibfk_3")
+  donaciones_motivo               donaciones_motivo @relation(fields: [donaciones_motivo_id], references: [motivo_id], onDelete: Cascade, map: "donaciones_ibfk_4")
+
+  @@index([donaciones_almacen_cantidad], map: "donaciones_almacen_cantidad")
+  @@index([donaciones_almacen_id], map: "donaciones_almacen_id")
+  @@index([donaciones_motivo_id], map: "donaciones_motivo_id")
+  @@index([donaciones_tipo_id], map: "donaciones_tipo_id")
+}
+
+model donaciones_motivo {
+  motivo_id  Int          @id @default(autoincrement())
+  motivo     String       @db.Text
+  donaciones donaciones[]
+}
+
+model donaciones_tipos {
+  tipo_donaciones_id     Int          @id @default(autoincrement())
+  tipo_donaciones_nombre String       @db.Text
+  almacen                almacen[]
+  donaciones             donaciones[]
+}
+
+model insumos_estado {
+  insumo_estado_id     Int       @id @default(autoincrement())
+  insumo_estado_nombre String    @db.Text
+  almacen              almacen[]
+}
+
+model users {
+  users_ID      Int         @id @default(autoincrement())
+  usuario       String      @db.VarChar(50)
+  contrase_a    String      @map("contraseña") @db.VarChar(50)
+  nombre        String      @db.Text
+  apellido      String      @db.Text
+  users_role_id Int
+  users_roles   users_roles @relation(fields: [users_role_id], references: [roles_ID], onDelete: Cascade, map: "users_ibfk_1")
+
+  @@index([users_role_id], map: "users_role_id")
+}
+
+model users_roles {
+  roles_ID     Int     @id @default(autoincrement())
+  roles_nombre String  @db.Text
+  users        users[]
 }
