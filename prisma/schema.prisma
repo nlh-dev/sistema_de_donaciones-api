@@ -69,7 +69,7 @@ model insumos_estado {
 model users {
   users_ID      Int         @id @default(autoincrement())
   usuario       String      @db.VarChar(50)
-  contrase_a    String      @map("contraseña") @db.VarChar(50)
+  password      String      @db.VarChar(50)
   nombre        String      @db.Text
   apellido      String      @db.Text
   users_role_id Int

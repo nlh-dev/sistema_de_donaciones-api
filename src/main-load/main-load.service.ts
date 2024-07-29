@@ -30,21 +30,21 @@ export class MainLoadService {
             data: [
                 {
                     usuario: 'bmerchan05',
-                    contrase_a: '05136299',
+                    password: '05136299',
                     nombre: 'Berenice',
                     apellido: 'Merchan',
                     users_role_id: 3
                 },
                 {
                     usuario: 'hnavarro331',
-                    contrase_a: 'h1309navarro',
+                    password: 'h1309navarro',
                     nombre: 'Hector',
                     apellido: 'Navarro',
                     users_role_id: 1
                 },
                 {
                     usuario: 'caro04bracho',
-                    contrase_a: '15057399',
+                    password: '15057399',
                     nombre: 'Carolina',
                     apellido: 'Bracho',
                     users_role_id: 2
