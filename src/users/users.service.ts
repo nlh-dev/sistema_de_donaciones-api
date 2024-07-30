@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { users, users_roles } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
-import { baseResponse } from 'src/dtos/baseResponse';
+import { baseBadResponse, baseResponse } from 'src/dtos/baseResponse';
 import { DtoCreateUsers, DtoUpdateUsers } from 'src/dtos/users.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -34,9 +34,10 @@ export class UsersService {
         });
 
         if (!createUsers) {
-            throw new BadRequestException('Ha ocurrido un error al crear el usuario');
+            baseBadResponse.message = 'Ha ocurrido un error al crear el usuario';
+            return baseBadResponse;
         }
-        baseResponse.message = 'Usuario registrado.'
+        baseResponse.message = 'Usuario registrado.';
         return baseResponse;
     }
 
@@ -55,7 +56,8 @@ export class UsersService {
         });
 
         if (!putUsers) {
-            throw new BadRequestException('Ha ocurrido un error al actualizar el usuario');
+            baseBadResponse.message = 'Ha ocurrido un error al actualizar el usuario';
+            return baseBadResponse;
         }
 
         baseResponse.message = 'Usuario actualizado.';
@@ -70,7 +72,8 @@ export class UsersService {
         });
 
         if (!deleteUsers) {
-            throw new BadRequestException('Ha ocurrido un error al eliminar el usuario');
+            baseBadResponse.message = 'Ha ocurrido un error al eliminar el usuario';
+            return baseBadResponse;
         }
 
         baseResponse.message = 'Usuario eliminado.';

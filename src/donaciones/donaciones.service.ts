@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { donaciones, donaciones_motivo, donaciones_tipos } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
-import { baseResponse } from 'src/dtos/baseResponse';
+import { baseBadResponse, baseResponse } from 'src/dtos/baseResponse';
 import { DtoAddDonaciones, DtoUpdateDonaciones } from 'src/dtos/donaciones.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -43,10 +43,11 @@ export class DonacionesService {
         });
 
         if(!createDonation){
-            throw new BadRequestException('Ha ocurrido un error al crear la donación.')
+            baseBadResponse.message = 'Ha ocurrido un error al crear la donación.';
+            return baseBadResponse;
         }
 
-        baseResponse.message = 'Donación creada exitosamente.'
+        baseResponse.message = 'Donación creada exitosamente.';
         return baseResponse;
     }
 
@@ -72,10 +73,11 @@ export class DonacionesService {
         });
 
         if(!updateDonation){
-            throw new BadRequestException('Ha ocurrido un error al actualizar la donación.')
+            baseBadResponse.message = 'Ha ocurrido un error al actualizar la donación.';
+            return baseBadResponse;
         }
 
-        baseResponse.message = 'Donación actualizada exitosamente.'
+        baseResponse.message = 'Donación actualizada exitosamente.';
         return baseResponse;
     }
 
@@ -87,9 +89,10 @@ export class DonacionesService {
         });
 
         if(!deleteDonacion){
-            throw new BadRequestException('Ha ocurrido un error al eliminar la donación.')
+            baseBadResponse.message = 'Ha ocurrido un error al eliminar la donación.';
+            return baseBadResponse;
         }
-        baseResponse.message = 'Donación eliminada.'
+        baseResponse.message = 'Donación eliminada.';
         return baseResponse;
     }
 }

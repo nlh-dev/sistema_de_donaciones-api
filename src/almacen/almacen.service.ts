@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { almacen, insumos_estado } from '@prisma/client';
 import { DtoAddAlmacen, DtoUpdateAlmacen } from 'src/dtos/almacen.dto';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
-import { baseResponse } from 'src/dtos/baseResponse';
+import { baseBadResponse, baseResponse } from 'src/dtos/baseResponse';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -12,7 +12,8 @@ export class AlmacenService {
     async getAlmacen(): Promise<almacen[]> {
         return await this.prismaService.almacen.findMany({
             include: {
-                insumos_estado: true
+                insumos_estado: true,
+                donaciones_tipos: true
             }
         });
     }
@@ -34,7 +35,8 @@ export class AlmacenService {
         });
 
         if (!createAlmacen) {
-            throw new BadRequestException('No se pudo crear el alcamen.')
+            baseBadResponse.message = 'No se pudo crear el alcamen.'
+            return baseBadResponse;
         }
 
         baseResponse.message = 'Almacen creado exitosamente.'
@@ -56,7 +58,8 @@ export class AlmacenService {
         });
 
         if (!updateAlmacen) {
-            throw new BadRequestException('No se pudo actualizar el alcamen.')
+            baseBadResponse.message = 'No se pudo actualizar el alcamen.'
+            return baseBadResponse;
         }
 
         baseResponse.message = 'Almacen actualizado exitosamente.'
@@ -71,7 +74,8 @@ export class AlmacenService {
         });
 
         if (!deleteAlmacen) {
-            throw new BadRequestException('No se pudo eliminado el alcamen.')
+            baseBadResponse.message = 'No se pudo eliminado el alcamen.'
+            return baseBadResponse;
         }
 
         baseResponse.message = 'Almacen eliminado exitosamente.'

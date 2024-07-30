@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { users } from '@prisma/client';
 import { baseResponse } from 'src/dtos/baseResponse';
 import { Authenticate, DtoAuth } from 'src/dtos/users.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -13,19 +14,26 @@ export class AuthService {
             where: {
                 usuario: user.usuario,
                 password: user.password
+            },
+            include: {
+                users_roles: true
             }
         });
 
-        if (!authenticateUser) {
-            throw new BadRequestException('Usuario no encontrado.')
-        }
-
-        baseResponse.message = `Bienvenido ${authenticateUser.nombre}`
-
-        const responseAuth: Authenticate = {
-            userAuthenticate: authenticateUser,
+        const responseAuth: Authenticate =  {
+            userAuthenticate: {} as users,
             ...baseResponse
+        };
+
+        if (!authenticateUser) {
+            responseAuth.message = 'Usuario o contraseña incorrectos';
+            responseAuth.statusCode = 400;
+            responseAuth.success = false;
+            return responseAuth;
         }
+
+        responseAuth.message = `Bienvenido ${authenticateUser.nombre}`;
+        responseAuth.userAuthenticate = authenticateUser;
 
         return responseAuth;
     }

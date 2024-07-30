@@ -5,3 +5,9 @@ export const baseResponse: DtoBaseResponse = {
     statusCode: 200,
     success: true
 }
+
+export const baseBadResponse: DtoBaseResponse = {
+    message: '',
+    statusCode: 400,
+    success: false
+}

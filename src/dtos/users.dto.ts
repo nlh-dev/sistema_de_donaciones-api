@@ -9,15 +9,13 @@ export class DtoCreateUsers {
     apellido: string;
     @IsString()
     usuario: string;
-    @IsString()
-    password: string;
     @IsNumber()
     usersRoleId: number;
 }
 
 export class DtoUpdateUsers extends DtoCreateUsers {
     @IsString()
-    contraseña: string;
+    password: string;
     @IsNumber()
     idUsers: number;
 }
