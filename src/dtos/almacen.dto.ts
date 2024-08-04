@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { IsDate, IsNumber, IsString } from "class-validator";
 
 export class DtoAddAlmacen {
@@ -9,6 +10,8 @@ export class DtoAddAlmacen {
     almacenTipo:number;
     @IsNumber()
     almacenEstado:number;
+
+    @Transform(({ value }) => new Date(value))
     @IsDate() 
     almacenFechaExpiracion: Date;
 }

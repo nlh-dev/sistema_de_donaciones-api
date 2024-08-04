@@ -35,11 +35,11 @@ export class AlmacenService {
         });
 
         if (!createAlmacen) {
-            baseBadResponse.message = 'No se pudo crear el alcamen.'
+            baseBadResponse.message = 'No se pudo agregar el insumo.'
             return baseBadResponse;
         }
 
-        baseResponse.message = 'Almacen creado exitosamente.'
+        baseResponse.message = 'Insumo agregado exitosamente.'
         return baseResponse;
     }
 
@@ -58,11 +58,11 @@ export class AlmacenService {
         });
 
         if (!updateAlmacen) {
-            baseBadResponse.message = 'No se pudo actualizar el alcamen.'
+            baseBadResponse.message = 'No se pudo actualizar el Insumo.'
             return baseBadResponse;
         }
 
-        baseResponse.message = 'Almacen actualizado exitosamente.'
+        baseResponse.message = 'Insumo actualizado exitosamente.'
         return baseResponse;
     }
 
@@ -74,11 +74,11 @@ export class AlmacenService {
         });
 
         if (!deleteAlmacen) {
-            baseBadResponse.message = 'No se pudo eliminado el alcamen.'
+            baseBadResponse.message = 'No se pudo eliminado el Insumo.'
             return baseBadResponse;
         }
 
-        baseResponse.message = 'Almacen eliminado exitosamente.'
+        baseResponse.message = 'Insumo eliminado exitosamente.'
         return baseResponse;
     }
 }
