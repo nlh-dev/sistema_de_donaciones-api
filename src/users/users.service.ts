@@ -27,7 +27,7 @@ export class UsersService {
             data: {
                 nombre: user.nombre,
                 apellido: user.apellido,
-                password: '1234',
+                password: user.password,
                 usuario: user.usuario,
                 users_role_id: user.usersRoleId
             }

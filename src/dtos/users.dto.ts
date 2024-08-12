@@ -11,11 +11,11 @@ export class DtoCreateUsers {
     usuario: string;
     @IsNumber()
     usersRoleId: number;
+    @IsString()
+    password: string;
 }
 
 export class DtoUpdateUsers extends DtoCreateUsers {
-    @IsString()
-    password: string;
     @IsNumber()
     idUsers: number;
 }
