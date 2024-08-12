@@ -17,6 +17,17 @@ export class DonacionesService {
             }
         });
     }
+    async getOneDonaciones(id: string): Promise<donaciones>{
+        return await this.prismaService.donaciones.findFirst({
+            where:{
+                donaciones_ID: Number(id)
+            },
+            include: {
+                donaciones_motivo: true,
+                donaciones_tipos: true
+            }
+        });
+    }
     async getDonacionesMotivo(): Promise<donaciones_motivo[]>{
         return await this.prismaService.donaciones_motivo.findMany();
     }
