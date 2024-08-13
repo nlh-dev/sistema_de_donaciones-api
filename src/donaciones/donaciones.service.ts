@@ -48,8 +48,8 @@ export class DonacionesService {
                 donaciones_diagnostico_receptor: donation.donacionesDiagnosticoReceptor,
                 donaciones_almacen_id: donation.donacionesAlmacenId,
                 donaciones_almacen_cantidad: donation.donacionesAlmacenCantidad,
-                donaciones_descripcion: donation.donacionesDescripcion,
-                donaciones_fecha_alta:donation.donacionesFechaAlta
+                donaciones_fecha_alta:donation.donacionesFechaAlta,
+                donaciones_estado_id: 1
             }
         });
 
@@ -75,7 +75,6 @@ export class DonacionesService {
                 donaciones_diagnostico_receptor: donation.donacionesDiagnosticoReceptor,
                 donaciones_almacen_id: donation.donacionesAlmacenId,
                 donaciones_almacen_cantidad: donation.donacionesAlmacenCantidad,
-                donaciones_descripcion: donation.donacionesDescripcion,
                 donaciones_fecha_alta:donation.donacionesFechaAlta
             },
             where: {

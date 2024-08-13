@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsString } from "class-validator";
 import { DtoBaseResponse } from "./base-response.dto";
 import { users } from "@prisma/client";
 
@@ -18,6 +18,8 @@ export class DtoCreateUsers {
 export class DtoUpdateUsers extends DtoCreateUsers {
     @IsNumber()
     idUsers: number;
+    @IsBoolean()
+    active: boolean;
 }
 
 export class Authenticate extends DtoBaseResponse{

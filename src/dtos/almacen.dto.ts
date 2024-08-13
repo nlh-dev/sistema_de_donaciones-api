@@ -6,6 +6,10 @@ export class DtoAddAlmacen {
     almacenNombre: string;
     @IsNumber()
     almacenCantidad:number;
+    @IsString() 
+    almacenDescripcion: string;
+    @IsNumber()
+    almacenDosis:number;
     @IsNumber()
     almacenTipo:number;
     @IsNumber()

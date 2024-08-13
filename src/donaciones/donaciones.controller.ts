@@ -12,10 +12,10 @@ export class DonacionesController {
     async getDonations(): Promise<donaciones[]>{
         return await this.donacionesService.getDonaciones();
     }
-    @Get('/:id')
-    async getOneDonations(@Param('id') id: string): Promise<donaciones>{
-        return await this.donacionesService.getOneDonaciones(id);
-    }
+    // @Get('/:id')
+    // async getOneDonations(@Param('id') id: string): Promise<donaciones>{
+    //     return await this.donacionesService.getOneDonaciones(id);
+    // }
     @Get('/motivos')
     async getMotivos(): Promise<donaciones_motivo[]>{
         return await this.donacionesService.getDonacionesMotivo();

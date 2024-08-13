@@ -21,8 +21,6 @@ export class DtoAddDonaciones {
     donacionesAlmacenId: number;
     @IsNumber()
     donacionesAlmacenCantidad: number;
-    @IsString()
-    donacionesDescripcion: string;
     @IsDate()
     donacionesFechaAlta: Date
 }

@@ -29,7 +29,8 @@ export class UsersService {
                 apellido: user.apellido,
                 password: user.password,
                 usuario: user.usuario,
-                users_role_id: user.usersRoleId
+                users_role_id: user.usersRoleId,
+                users_status: true
             }
         });
 
@@ -48,7 +49,8 @@ export class UsersService {
                 apellido: user.apellido,
                 password: user.password,
                 usuario: user.usuario,
-                users_role_id: user.usersRoleId
+                users_role_id: user.usersRoleId,
+                users_status: user.active
             },
             where: {
                 users_ID: user.idUsers

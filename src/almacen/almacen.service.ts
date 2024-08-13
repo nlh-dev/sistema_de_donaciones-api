@@ -30,7 +30,9 @@ export class AlmacenService {
                 almacen_cantidad: almacen.almacenCantidad,
                 almacen_tipo: almacen.almacenTipo,
                 almacen_estado: almacen.almacenEstado,
-                almacen_fecha_de_expiracion: almacen.almacenFechaExpiracion
+                almacen_fecha_de_expiracion: almacen.almacenFechaExpiracion,
+                almacen_descripcion: almacen.almacenDescripcion,
+                almacen_dosis: almacen.almacenDosis,
             }
         });
 
@@ -50,7 +52,9 @@ export class AlmacenService {
                 almacen_cantidad: almacen.almacenCantidad,
                 almacen_tipo: almacen.almacenTipo,
                 almacen_estado: almacen.almacenEstado,
-                almacen_fecha_de_expiracion: almacen.almacenFechaExpiracion
+                almacen_fecha_de_expiracion: almacen.almacenFechaExpiracion,
+                almacen_descripcion: almacen.almacenDescripcion,
+                almacen_dosis: almacen.almacenDosis,
             },
             where: {
                 almacen_id: almacen.almacenId
