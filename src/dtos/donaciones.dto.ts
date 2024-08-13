@@ -1,4 +1,5 @@
-import { IsDate, IsNumber, IsString } from "class-validator"
+import { Transform } from "class-transformer";
+import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator"
 
 export class DtoAddDonaciones {
     @IsNumber()
@@ -21,6 +22,7 @@ export class DtoAddDonaciones {
     donacionesAlmacenId: number;
     @IsNumber()
     donacionesAlmacenCantidad: number;
+    @Transform(({ value }) => new Date(value))
     @IsDate()
     donacionesFechaAlta: Date
 }
@@ -28,4 +30,9 @@ export class DtoAddDonaciones {
 export class DtoUpdateDonaciones extends DtoAddDonaciones {
     @IsNumber()
     donationId: number;
+}
+
+export class DtoUpdateConfirmDonaciones {
+    @IsBoolean()
+    confirm: boolean
 }

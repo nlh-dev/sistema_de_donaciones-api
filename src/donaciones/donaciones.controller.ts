@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { DonacionesService } from './donaciones.service';
 import { donaciones, donaciones_motivo, donaciones_tipos } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
-import { DtoAddDonaciones, DtoUpdateDonaciones } from 'src/dtos/donaciones.dto';
+import { DtoAddDonaciones, DtoUpdateConfirmDonaciones, DtoUpdateDonaciones } from 'src/dtos/donaciones.dto';
 
 @Controller('donaciones')
 export class DonacionesController {
@@ -12,10 +12,14 @@ export class DonacionesController {
     async getDonations(): Promise<donaciones[]>{
         return await this.donacionesService.getDonaciones();
     }
-    // @Get('/:id')
-    // async getOneDonations(@Param('id') id: string): Promise<donaciones>{
-    //     return await this.donacionesService.getOneDonaciones(id);
-    // }
+    @Get('/solicitudes')
+    async getDonationsUnconfirm(): Promise<donaciones[]>{
+        return await this.donacionesService.getDonationsUnconfirm();
+    }
+    @Get('/consult/:id')
+    async getOneDonations(@Param('id') id: string): Promise<donaciones>{
+        return await this.donacionesService.getOneDonaciones(id);
+    }
     @Get('/motivos')
     async getMotivos(): Promise<donaciones_motivo[]>{
         return await this.donacionesService.getDonacionesMotivo();
@@ -33,6 +37,10 @@ export class DonacionesController {
     @Put()
     async updateDonation(@Body() donation: DtoUpdateDonaciones): Promise<DtoBaseResponse>{
         return await this.donacionesService.updateDonaciones(donation);
+    }
+    @Put('/confirm/:id')
+    async updateConfirmDonation(@Param('id') id: string, @Body() confirm: DtoUpdateConfirmDonaciones): Promise<DtoBaseResponse>{
+        return await this.donacionesService.updateConfirmDonaciones(id,confirm);
     }
 
     @Delete('/:id')

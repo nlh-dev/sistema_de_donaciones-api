@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { donaciones, donaciones_motivo, donaciones_tipos } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
 import { baseBadResponse, baseResponse } from 'src/dtos/baseResponse';
-import { DtoAddDonaciones, DtoUpdateDonaciones } from 'src/dtos/donaciones.dto';
+import { DtoAddDonaciones, DtoUpdateConfirmDonaciones, DtoUpdateDonaciones } from 'src/dtos/donaciones.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -13,7 +13,20 @@ export class DonacionesService {
         return await this.prismaService.donaciones.findMany({
             include: {
                 donaciones_motivo: true,
-                donaciones_tipos: true
+                donaciones_tipos: true,
+                estado: true
+            }
+        });
+    }
+    async getDonationsUnconfirm(): Promise<donaciones[]>{
+        return await this.prismaService.donaciones.findMany({
+            where: {
+                donaciones_estado_id: 1
+            },
+            include: {
+                donaciones_motivo: true,
+                donaciones_tipos: true,
+                estado: true
             }
         });
     }
@@ -24,8 +37,10 @@ export class DonacionesService {
             },
             include: {
                 donaciones_motivo: true,
-                donaciones_tipos: true
+                donaciones_tipos: true,
+                estado: true
             }
+
         });
     }
     async getDonacionesMotivo(): Promise<donaciones_motivo[]>{
@@ -59,6 +74,25 @@ export class DonacionesService {
         }
 
         baseResponse.message = 'Donación creada exitosamente.';
+        return baseResponse;
+    }
+
+    async updateConfirmDonaciones(id: string, confirm: DtoUpdateConfirmDonaciones): Promise<DtoBaseResponse>{
+        const updateDonation = await this.prismaService.donaciones.update({
+            data: {
+                donaciones_estado_id: confirm.confirm ? 2 : 3
+            },
+            where: {
+                donaciones_ID: Number(id)
+            }
+        });
+
+        if(!updateDonation){
+            baseBadResponse.message = 'Ha ocurrido un error al actualizar la donación.';
+            return baseBadResponse;
+        }
+
+        baseResponse.message = `Donación ${confirm.confirm ? 'Aprobada' : 'Rechazada'} exitosamente.`;
         return baseResponse;
     }
 
