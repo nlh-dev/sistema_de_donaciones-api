@@ -23,6 +23,9 @@ export class MainLoadService {
                 {
                     roles_nombre: 'Colaborador'
                 },
+                {
+                    roles_nombre: 'Administración'
+                },
             ]
         });
 
