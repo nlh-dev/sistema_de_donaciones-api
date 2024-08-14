@@ -13,7 +13,7 @@ export class AuthService {
         const authenticateUser = await this.prismaService.users.findFirst({
             where: {
                 usuario: user.usuario,
-                password: user.password
+                password: user.password,
             },
             include: {
                 users_roles: true
@@ -27,6 +27,13 @@ export class AuthService {
 
         if (!authenticateUser) {
             responseAuth.message = 'Usuario o contraseña incorrectos';
+            responseAuth.statusCode = 400;
+            responseAuth.success = false;
+            return responseAuth;
+        }
+
+        if (authenticateUser.users_status == false) {
+            responseAuth.message = 'Usuario Inactivo';
             responseAuth.statusCode = 400;
             responseAuth.success = false;
             return responseAuth;
