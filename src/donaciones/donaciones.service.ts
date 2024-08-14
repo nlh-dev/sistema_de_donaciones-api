@@ -51,6 +51,35 @@ export class DonacionesService {
     }
 
     async createDonaciones(donation: DtoAddDonaciones): Promise<DtoBaseResponse>{
+        const fidnAlmacen = await this.prismaService.almacen.findFirst({
+            where: {
+                almacen_id: donation.donacionesAlmacenId
+            }
+        });
+
+        if(!fidnAlmacen){
+            baseBadResponse.message = 'No se encontró el insumo';
+            return baseBadResponse;
+        }
+
+        const amount = donation.donacionesMotivoId == 1 ? 
+        fidnAlmacen.almacen_cantidad - donation.donacionesAlmacenCantidad :
+        fidnAlmacen.almacen_cantidad + donation.donacionesAlmacenCantidad;
+
+        const updateInsumo = await this.prismaService.almacen.update({
+            data: {
+                almacen_cantidad: amount
+            },
+            where: {
+                almacen_id: donation.donacionesAlmacenId
+            }
+        });
+
+        if(!updateInsumo){
+            baseBadResponse.message = 'Ha ocurrido un error al actualizar la cantidad.';
+            return baseBadResponse;
+        }
+
         const createDonation = await this.prismaService.donaciones.create({
             data: {
                 donaciones_tipo_id: donation.donacionesTipoId,
