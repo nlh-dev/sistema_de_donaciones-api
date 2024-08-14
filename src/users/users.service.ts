@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { users, users_roles } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
 import { baseBadResponse, baseResponse } from 'src/dtos/baseResponse';
-import { DtoCreateUsers, DtoUpdateUsers } from 'src/dtos/users.dto';
+import { DtoChangeStatusUsers, DtoCreateUsers, DtoUpdateUsers } from 'src/dtos/users.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -39,6 +39,25 @@ export class UsersService {
             return baseBadResponse;
         }
         baseResponse.message = 'Usuario registrado.';
+        return baseResponse;
+    }
+
+    async changeStatusUser(user: DtoChangeStatusUsers): Promise<DtoBaseResponse> {
+        const putUsers = await this.prismaService.users.update({
+            data: {
+                users_status: user.active
+            },
+            where: {
+                users_ID: user.idUsers
+            }
+        });
+
+        if (!putUsers) {
+            baseBadResponse.message = 'Ha ocurrido un error al actualizar el usuario';
+            return baseBadResponse;
+        }
+
+        baseResponse.message = 'Estatus actualizado.';
         return baseResponse;
     }
 

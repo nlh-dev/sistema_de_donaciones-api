@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UsersService } from './users.service';
 import { users, users_roles } from '@prisma/client';
 import { DtoBaseResponse } from 'src/dtos/base-response.dto';
-import { DtoCreateUsers, DtoUpdateUsers } from 'src/dtos/users.dto';
+import { DtoChangeStatusUsers, DtoCreateUsers, DtoUpdateUsers } from 'src/dtos/users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +22,10 @@ export class UsersController {
         return await this.usersService.addUsers(user);
     }
 
+    @Put('/status')
+    async changeStatusUser(@Body() user: DtoChangeStatusUsers): Promise<DtoBaseResponse>{
+        return await this.usersService.changeStatusUser(user);
+    }
     @Put()
     async updateUser(@Body() user: DtoUpdateUsers): Promise<DtoBaseResponse>{
         return await this.usersService.updateUsers(user);

@@ -22,6 +22,13 @@ export class DtoUpdateUsers extends DtoCreateUsers {
     active: boolean;
 }
 
+export class DtoChangeStatusUsers {
+    @IsNumber()
+    idUsers: number;
+    @IsBoolean()
+    active: boolean;
+}
+
 export class Authenticate extends DtoBaseResponse{
     userAuthenticate: users
 }
