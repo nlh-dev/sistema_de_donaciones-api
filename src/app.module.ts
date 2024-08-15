@@ -7,9 +7,10 @@ import { UsersModule } from './users/users.module';
 import { AlmacenModule } from './almacen/almacen.module';
 import { DonacionesModule } from './donaciones/donaciones.module';
 import { AuthModule } from './auth/auth.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
-  imports: [MainLoadModule, UsersModule, AlmacenModule, DonacionesModule, AuthModule],
+  imports: [MainLoadModule, UsersModule, AlmacenModule, DonacionesModule, AuthModule, ReportModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
